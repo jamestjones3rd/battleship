@@ -4,12 +4,14 @@ import java.util.Scanner;
 public class BattleshipGame {
     private static final int GRID_SIZE = 7;
     private static final int NUM_BATTLESHIPS = 3;
-    private static final int MAX_GUESSES = 30;
+    private static final int MAX_GUESSES = 30; //maximum number of guesses allowed in the game.
 
-    private Battleship[] battleships;
-    private GameHelper helper;
-    private int numGuesses;
+    private Battleship[] battleships; //array of Battleship objects representing the battleships in the game.
+    private GameHelper helper; //instance of the GameHelper class used for game-related operations.
+    private int numGuesses; //integer tracking the number of guesses made.
 
+    //Initializes the battleships array, the GameHelper object,
+    // and the numGuesses variable. It also calls the setupGame() method.
     public BattleshipGame() {
         battleships = new Battleship[NUM_BATTLESHIPS];
         helper = new GameHelper(GRID_SIZE);
@@ -17,6 +19,8 @@ public class BattleshipGame {
         setupGame();
     }
 
+    //Sets up the game by placing the battleships on the grid using
+    //the GameHelper object. It ensures that the battleships do not collide with each other.
     public void setupGame() {
         ArrayList<String> locations;
         for (int i = 0; i < NUM_BATTLESHIPS; i++) {
@@ -27,6 +31,7 @@ public class BattleshipGame {
         }
     }
 
+    //Checks if the given locations collide with any battleships in the game.
     private boolean collision(ArrayList<String> locations) {
         for (Battleship ship : battleships) {
             if (ship != null && ship.collision(locations)) {
@@ -36,6 +41,9 @@ public class BattleshipGame {
         return false;
     }
 
+    //Starts the game loop. It prompts the user for guesses, checks if the guesses hit or
+    // miss the battleships, and updates the game state accordingly. It continues until
+    // the maximum number of guesses is reached or all battleships are sunk.
     public void play() {
         Scanner scanner = new Scanner(System.in);
 
@@ -73,6 +81,7 @@ public class BattleshipGame {
         }
     }
 
+    //Checks if all battleships are sunk.
     private boolean allSunk() {
         for (Battleship ship : battleships) {
             if (!ship.isSunk()) {
@@ -82,6 +91,8 @@ public class BattleshipGame {
         return true;
     }
 
+    //The entry point of the program.
+    // It creates an instance of the BattleshipGame class and calls the play() method to start the game.
     public static void main(String[] args) {
         BattleshipGame game = new BattleshipGame();
         game.play();

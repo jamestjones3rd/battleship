@@ -1,18 +1,22 @@
+//this class provides functionality for managing the game grid,
+// placing startups, getting user input, and displaying the game board
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameHelper {
-    private static final String ALPHABET = "abcdefg";
-    private static final int MAX_ATTEMPTS = 200;
+    private static final String ALPHABET = "abcdefg"; //string representing the alphabet used for grid column labels.
+    private static final int MAX_ATTEMPTS = 200; //maximum number of attempts allowed for placing a startup.
 
-    private final int gridSize;
-    private final char[][] grid;
-    private final Random random = new Random();
+    private final int gridSize; //integer representing the size of the game grid.
+    private final char[][] grid; // 2D character array representing the game grid.
+    private final Random random = new Random(); //class used for generating random numbers.
 
-    private int startupCount = 0;
+    private int startupCount = 0; // integer tracking the number of startups placed.
 
+    //Initializes the gridSize variable and creates a grid filled with dots ('.').
     public GameHelper(int gridSize) {
         this.gridSize = gridSize;
         this.grid = new char[gridSize][gridSize];
@@ -20,13 +24,16 @@ public class GameHelper {
             Arrays.fill(row, '.');
         }
     }
-
+//Asks the user for input and returns it as a lowercase string.
     public String getUserInput(String prompt) {
         System.out.print(prompt + ": ");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine().toLowerCase();
     }
 
+    //Attempts to place a startup on the grid. It generates random coordinates and checks if
+    // the startup fits and the coordinates are available. If successful, it marks the position
+    // on the grid and returns the alpha coordinates as an ArrayList of strings.
     public ArrayList<String> placeStartup(int startupSize) {
         int[] startupCoords = new int[startupSize];
         int attempts = 0;
@@ -53,6 +60,7 @@ public class GameHelper {
         return alphaCells;
     }
 
+    //Checks if the startup coordinates fit within the grid based on the increment value.
     boolean startupFits(int[] startupCoords, int increment) {
         int finalLocation = startupCoords[startupCoords.length - 1];
         if (increment == 1) {
@@ -62,6 +70,7 @@ public class GameHelper {
         }
     }
 
+    //Checks if the given startup coordinates are available (not already occupied) on the grid.
     boolean coordsAvailable(int[] startupCoords) {
         for (int coord : startupCoords) {
             int row = calcRowFromIndex(coord);
